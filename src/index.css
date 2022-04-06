@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+    font-family: OverThere;
+    src: url("fonts/OverThere.ttf") format("truetype");
+}
+
+#nav_appname_icon {
+  font-size: 16pt;
+  cursor: default;
+  font-family: 'OverThere', sans-serif;
+}
