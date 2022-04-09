@@ -15,9 +15,6 @@ def register_bps(app):
     from .main import main as main_bp
     app.register_blueprint(main_bp, url_prefix='/')
 
-    from .stackinspector import stackinspector as si_bp
-    app.register_blueprint(si_bp, url_prefix='/stackinspector')
-
 
 def create_app(debug=False):
     '''
@@ -30,7 +27,12 @@ def create_app(debug=False):
     app.config.from_object(Config)
 
     # build list of whitelisted sites.
-    whitelisted_sites = [app.config['APP_SITE_NAME']]
+    #   port 5000 is for client build dist
+    #   port 3000 is for npm hot reloading during dev
+    whitelisted_sites = [
+        'http://localhost:3000',
+        'http://localhost:5000',
+    ]
 
     CORS(
         app, 
@@ -43,4 +45,3 @@ def create_app(debug=False):
     socketio.init_app(app, cors_allowed_origins=whitelisted_sites)
 
     return app
-

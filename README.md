@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# StackSpy
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+StackSpy provides a way of graphing the call stack used when running recursive functions.
 
-## Available Scripts
+*This is a total WIP.  At this point a crude profiling works and all of the wiring is complete for the app infrastructure.  Needs `d3` for visualization on the frontend and the utilities need to be built out more and documented.  Probably should be packaged as a wheel that installs an executable on the path to allow starting the app by simply calling `stackspy` and the utilities could then be imported using `from stackspy.utils import ...`*
 
-In the project directory, you can run:
+## Usage
 
-### `npm start`
+### start the app
+From project root, run:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+'''
+./api/.env/Scripts/activate
+'''
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+then start the flask development server by issuing:
 
-### `npm test`
+'''
+npm run start-api
+'''
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+now you can visit `localhost:5000` in the browser.
 
-### `npm run build`
+### example - profile function
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+create the following file (currently, in project root until this get packaged properly)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```python
+from util import profile_stack_calls, send_stack_info
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+@profile_stack_calls()
+def fibonacci(n, p_id=None, id=1):
+    '''
+    recursively compute the nth fibonacci number
 
-### `npm run eject`
+    fibonacci numbers are:
+        1, 2, 3, 5, 8, 13, 21, ...
+    or in other words ...
+        1, 2, n_{i-2} + n_{i-1}, ...
+    '''
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        return (
+            fibonacci(n-2, p_id = id, id = id*2) + 
+            fibonacci(n-1, p_id = id, id = id*2+1)
+        )
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+send_stack_info(fibonacci(4))
+```

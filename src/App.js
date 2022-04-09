@@ -23,54 +23,23 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    /*
-    let dest = this.state.server_hostname + '/heartbeat';
-    fetch(dest, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'Accept': 'application/json',
-      },
-      credentials: "include"
-    }).then(res => {
-      return (res.json())
-    }).then(data => {
-      console.log(data)
-    }).catch(err => {
-      console.log(err)
-    })
-    */
    this.getMessages();
   }
 
   getMessages = () => {
     socket.on("message", msg => {
       let new_stack_list = [...this.state.stack_call_list];
+     
+      msg = JSON.parse(msg);
+      // set a key for the antd table
+      msg['key'] = msg['uuid'];
+
       new_stack_list.push(msg);
-      console.log(new_stack_list)
+      console.log(msg);
       this.setState({
         stack_call_list: new_stack_list,
       })
     })
-  }
-
-  onChange = (e) => {
-    this.setState({
-      current_message: e.target.value,
-    })
-  }
-
-  onClick = () => {
-    if (this.state.current_message !== undefined){
-      console.log(this.state.current_message);
-      socket.emit("message", this.state.current_message);
-      this.setState({
-        current_message: undefined,
-      })
-    }
-    else{
-      alert('put in a message')
-    }
   }
 
   render() {
@@ -86,6 +55,7 @@ class App extends React.Component {
               path={ROUTES.HOME}
               element={<StackCalls
                 server_hostname={this.state.server_hostname}
+                stack_call_list = {this.state.stack_call_list}
               />}
             />
           </Routes>

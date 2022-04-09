@@ -1,5 +1,4 @@
 from flask import send_from_directory, current_app
-
 from . import main
 
 @main.route('/')
