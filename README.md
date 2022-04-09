@@ -1,6 +1,6 @@
 # StackSpy
 
-StackSpy provides a way of graphing the call stack used when running recursive functions.
+StackSpy provides a utility for profiling and an application for viewing the structure of the call stack when running recursive functions.
 
 *This is a total WIP.  At this point a crude profiling works and all of the wiring is complete for the app infrastructure.  Needs `d3` for visualization on the frontend and the utilities need to be built out more and documented.  Probably should be packaged as a wheel that installs an executable on the path to allow starting the app by simply calling `stackspy` and the utilities could then be imported using `from stackspy.utils import ...`*
 
@@ -9,15 +9,15 @@ StackSpy provides a way of graphing the call stack used when running recursive f
 ### start the app
 From project root, run:
 
-'''
+```
 ./api/.env/Scripts/activate
-'''
+```
 
 then start the flask development server by issuing:
 
-'''
+```
 npm run start-api
-'''
+```
 
 now you can visit `localhost:5000` in the browser.
 
