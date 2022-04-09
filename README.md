@@ -2,18 +2,22 @@
 
 StackSpy provides a utility for profiling and an application for viewing the structure of the call stack when running recursive functions.
 
-*This is a total WIP.  At this point a crude profiling works and all of the wiring is complete for the app infrastructure.  Needs `d3` for visualization on the frontend and the utilities need to be built out more and documented.  Probably should be packaged as a wheel that installs an executable on the path to allow starting the app by simply calling `stackspy` and the utilities could then be imported using `from stackspy.utils import ...`*
+_This is a total WIP. At this point a crude profiling works and all of the wiring is complete for the app infrastructure. Needs `d3` for visualization on the frontend and the utilities need to be built out more and documented. Probably should be packaged as a wheel that installs an executable on the path to allow starting the app by simply calling `stackspy` and the utilities could then be imported using `from stackspy.utils import ...`_
 
 ## Usage
 
 ### start the app
-From project root, run:
 
-```
-./api/.env/Scripts/activate
+#### Actiave Virtual Environment
+
+On first use, you will need to create the virtual environment for Python (execute all commands from root directory):
+
+```bash
+poetry shell
+poetry install
 ```
 
-then start the flask development server by issuing:
+From now on you can just activate it using `poetry shell`. Then start the flask development server by issuing:
 
 ```
 npm run start-api
@@ -44,7 +48,7 @@ def fibonacci(n, p_id=None, id=1):
         return 2
     else:
         return (
-            fibonacci(n-2, p_id = id, id = id*2) + 
+            fibonacci(n-2, p_id = id, id = id*2) +
             fibonacci(n-1, p_id = id, id = id*2+1)
         )
 
