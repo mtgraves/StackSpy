@@ -24,10 +24,11 @@ const StackCallTable = (props) => {
             render: (_, record) => {
                 return (
                     <Tooltip 
-                        key='view_stack_tooltip' 
+                        key='view_stack_tooltip_key' 
                         title={'View stack call graph'} 
                     >
-                        <Button 
+                        <Button
+                            key='set_call_view_btn_key' 
                             onClick={() => props.setCallToView(record)} 
                             icon={<FaChartLine style={{color: "#009933"}}/>}
                         />

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import * as d3 from "d3";
+import React from 'react';
+import StackCallTree from './StackCallTree';
 
 const StackCallDisplay = (props) => {
     
@@ -7,7 +7,11 @@ const StackCallDisplay = (props) => {
         return 'YO YOU NEED TO PICK SOMETHING'
     }
     else {
-        return 'this is going to be an amazing plot from d3'
+        return (
+            <StackCallTree
+                stack_call_2_display={props.stack_call_2_display}
+            />
+        )
     }
 }
 
